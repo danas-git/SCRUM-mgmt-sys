@@ -1,0 +1,26 @@
+
+<div class=" col-sm-11 ">
+    <h3 style="color:#A537FD;font-size: 20px;font-weight: 600;margin-bottom: 20px">Past Sprints</h3>
+
+        <table class="table "  >
+            <thead  style="background-color:#eaeaea " >
+                <tr >
+                    <th  style="font-size: 13px">Sprint #</th>
+                    <th style="font-size: 13px">Name</th>
+                    <th style="font-size: 13px">Description</th>
+                    <th style="font-size: 13px">Date Started</th>
+                    <th style="font-size: 13px">Date Ended</th>
+                </tr>
+            </thead>
+            <br/>
+            <tbody>
+                <tr ng-repeat="sprint in sprints track by $index">
+                    <td scope="row" style="font-size: 13px">{{$index + 1}}</td>
+                    <td> <span style="font-size: 13px;" ng-bind="sprint.sprintName">ZX</span></td>
+                    <td> <span style="font-size: 13px;" ng-bind="sprint.sprintDescription">ZX</span></td>
+                    <td> <span style="font-size: 13px;" ng-bind="sprint.sprintStartDate">ZX</span></td>
+                    <td> <span style="font-size: 13px;" ng-bind="sprint.sprintEndDate">zx</span></td>
+                </tr>
+            </tbody>
+        </table>
+</div>

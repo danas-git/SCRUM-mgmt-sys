@@ -1,0 +1,85 @@
+
+<h3 style="color:#A537FD;font-size: 24px;font-weight: 600;margin-bottom: 20px">My account</h3>
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" data-target="#home" style="color: #A537FD">My Account Data</a></li>
+    <li><a data-toggle="tab" data-target="#menu1" style="color: #A537FD">Credentials</a></li>
+
+</ul>
+
+<div class="tab-content col-sm-8 col-sm-offset-1">
+
+    <div id="home" class="tab-pane fade in active">
+        <div class="table table-condensed" style="margin-top: 40px">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td style="border-top:none !important;font-size: 14px" >Username:&nbsp;&nbsp;&nbsp;&nbsp; <span  ng-bind="userProfile.username"></span></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 14px">Created On:&nbsp;&nbsp; <span ng-bind="userProfile.created_on"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+        <div class="table table-condensed" style="margin-top: 40px">
+            <form role="form" ng-submit="updateProfile()">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td style="border-top:none !important;font-size: 14px">First name:</td>
+                    <td style="border-top:none !important;font-size: 14px"><input type="username" class="form-control" ng-disabled="disabled1" ng-model="userProfile.firstName" ng-required="true" placeholder="Enter Firstname"></td>
+                    <td style="border-top:none !important;"><a ng-click="editFirstName()" style="color:#00EBBE;font-weight: 600;font-size: 14px">Edit</a></td>
+                </tr>
+                <tr >
+                    <td style="font-size: 14px">Last name:</td>
+                    <td style="font-size: 14px"><input type="username" class="form-control" ng-disabled="disabled2" ng-model="userProfile.lastName"  placeholder="Enter Lastname"></td>
+                    <td><a ng-click="editLastName()" style="color:#00EBBE;font-weight: 600;font-size: 14px">Edit</a></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 14px">Email:</td>
+                    <td style="font-size: 14px"><input type="username" class="form-control" ng-disabled="disabled3"  ng-model="userProfile.email"  placeholder="Enter Lastname"></td>
+                    <td ><a ng-click="editEmail()" style="color:#00EBBE;font-weight: 600;font-size: 14px">Edit</a></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 14px">Username</td>
+                    <td style="font-size: 14px"><input type="username" class="form-control" ng-disabled="true" ng-model="userProfile.username"   placeholder="Enter Lastname"></td>
+                </tr>
+                <tr>
+                    <td><button type="submit" class="btn btn-default" style="color:#A537FD;font-weight:600">Update</button></td>
+                </tr>
+                </tbody>
+            </table>
+            </form>
+
+
+
+            <p  style="color:#A537FD;font-weight: 600;text-decoration: none;font-size: 17px">Change Password &raquo;</p>
+                <form role="form" ng-submit="updatePassword()">
+                    <table class="table table-condensed" style="margin-top:30px "  >
+                        <tbody>
+                            <tr>
+                                <td style="border-top:none !important;font-size: 14px">Current Password</td>
+                                <td style="border-top:none !important;font-size: 14px"><input type="password" class="form-control" ng-model="pass.currentPassword" id="FirstName" placeholder="Enter current Password"></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 14px">New </td>
+                                <td style="font-size: 14px"><input type="password" class="form-control" ng-model="pass.newPassword" placeholder="Enter new Password"></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 14px">Re-type New </td>
+                                <td style="font-size: 14px"><input type="password" class="form-control"  ng-model="pass.repeatPassword" placeholder="Re-enter new Password"></td>
+                            </tr>
+
+
+                            <tr>
+                                <td ><button type="submit" class="btn btn-default"style="color:#A537FD;font-weight:600">Save</button></td>
+                                <td style="border: none"><p style="color:red;font-size: 10px;font-weight: 600">{{message}}<span style="color:green;font-size: 10px;font-weight: 600">{{successMessage}}</span></p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+        </div>
+    </div>
+</div>

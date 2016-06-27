@@ -1,0 +1,16 @@
+
+<h3 style="color:#A537FD;font-weight: 600">My Tasks</h3>
+<br/>
+<div ng-repeat="stories in tasks.sprintStory track by $index ">
+    <div ng-repeat="tasks in stories.storyTasks " class="col-md-4 col-sm-5 ">
+        <div class="panel panel-default ">
+            <div class="panel-heading"><span style="font-size: 14px;font-weight: 600">{{tasks.taskName}}</span></div>
+            <div class="panel-body">
+                <p><span style="font-size: 13px;font-weight: 600" >Description:</span><span style="font-size: 12px;">&nbsp;&nbsp;{{tasks.taskDescription}}</span></p>
+                <p><span style="font-size: 13px;font-weight: 600" >Status: &nbsp;&nbsp;</span><span style="font-size: 12px;" editable-select="task.status"  e-ng-options="t for t in taskStatus" onbeforesave="saveStatus(tasks._id,$data)">{{tasks.taskStatus}}</span></p>
+                <button type="submit" class="btn btn-default btn-sm" style="color:#fff;background-color:#A537FD; border-style: none;font-weight:600" ng-hide="tasks.taskStatus=='completed'" ng-click="taskCompleted(tasks._id)">Task completed!!</button>
+            </div>
+        </div>
+    </div>
+</div>
+

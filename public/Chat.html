@@ -1,0 +1,42 @@
+<div class="container" ng-controller="sendChatController">
+ <div class="row">
+  <div class="col-md-5" style="width: 800px;height: 500px;">
+   <div class="panel panel-primary">
+    <div class="panel-body" style="height: 150px;">
+     <ul class="chat">
+      <li class="clearfix">
+       <div  id="chat" ng-model="chatwindow" class="chat-body clearfix">
+
+       </div>
+      </li>
+      </ul>
+    </div>
+    <div class="panel-footer">
+     <div class="input-group">
+      <input ng-enter="SendChat()" id="message" ng-model="chatmessage" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+                            <button ng-click="SendChat()" ng-enter="SendChat()" class="btn btn-warning btn-sm" id="send-message">
+                             Send</button>
+                        </span>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!--
+<script>
+    var socket = io.connect();
+    var msg;
+    var chat = $('#chat');
+    $('#send-message').click(function(){
+        msg  =$('#message').val();
+        socket.emit('send message', msg);
+        $('#message').val('');
+
+    });
+    socket.on('new message', function(data){
+        chat.append("<strong style='color:red'></strong>name: <span>" + data + "</span> </br>");
+    });
+</script> -->

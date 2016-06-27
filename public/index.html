@@ -1,0 +1,581 @@
+<html>
+
+<head>
+    <title>Hotel Scrum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/angular-chart.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script src="js/angular-chart.min.js.map"></script>
+    <script src="js/angular-chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.js"></script>
+    <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
+    <script src="http://vitalets.github.io/angular-xeditable/dist/js/xeditable.js"></script>
+    <link href="http://vitalets.github.io/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/Registration.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body ng-app="registration">
+
+<div class="container-fluid" style="background-color:#F8F8F8;border-bottom :1px solid #E0E0E0;width:100%;top:0px;position:relative;z-index:9999 ">
+    <div class="col-md-2 col-sm-2 col-xs-3" >
+        <img id="header-logo" src="Logo01.png" style="margin-top: 5px;margin-bottom: 4px ;height:35px">
+    </div>
+
+    <div>
+    </div>
+    <div class="pull-right" >
+        <ul class="list-inline">
+            <!--ng-show="authenticated" -->
+            <li> <button class="btn btn-primary dropdown-toggle" ng-show="authenticated"  data-toggle="modal" data-target="#myModal" style="border-color: #00EBBE;background-color: #fff"><span style="color: #00EBBE"><div class="glyphicon glyphicon-plus"></div></span></button>
+                <div class="modal fade"  id="myModal" role="dialog" style="z-index:99999">
+                    <div class="modal-dialog" >
+
+                        <!-- Modal content-->
+                        <div class="modal-content" ng-controller="addProjectController" >
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title" style="color:#595959">Project Details</h4>
+                            </div>
+                            <form role="form" ng-submit="newProject()">
+                                <div class="modal-body">
+                                    <div class="form-group" style="color:#595959">
+                                        <label for="usr">Project Title:</label>
+                                        <input type="text" ng-model="project.projectName" class="form-control" id="usr">
+                                    </div>
+                                    <div class="form-group" style="color:#595959">
+                                        <label for="comment">Project Description:</label>
+                                        <textarea class="form-control" ng-model="project.projectDescription" rows="2" id="comment"></textarea>
+                                    </div>
+                                </div>
+                                <p  style="color:mediumpurple;font-size: 11px;font-weight: 600">{{message}}</p>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-default"  style="background-color:#F8F8F8;color:#00EBBE"><span style="font-weight:600">New Project</span></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" ng-show="authenticated" data-toggle="dropdown" href=""><span style="color:#00EBBE;font-weight:600">MyProjects</span></span></a>
+
+                <ul  ng-controller="projectListDropdownController" class="dropdown-menu" >
+                    <li ng-repeat="projects in projectLists" >
+                        <a ng-click="selectProject(projects.projectName)"  >{{projects.projectName}}</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li ng-hide="authenticated"><a  href="#/login"><span style="color:#00EBBE;font-weight:600">Login</span></a>
+                </li>
+            <li ng-hide="authenticated"><a href="#/register"><span style="color:#00EBBE;font-weight:600">Register</span></a></li>
+            <li class="dropdown" ng-show="authenticated">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class=" glyphicon glyphicon-bell"style="font-size:18px;color: #00EBBE"></span></a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#">Submenu 1-1</a></li>
+                    <li><a href="#">Submenu 1-2</a></li>
+                    <li><a href="#">Submenu 1-3</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown" ng-show="authenticated">
+                <a class="dropdown-toggle" data-toggle="dropdown" href=""  ><span class=" glyphicon glyphicon-user"style="font-size:18px;color: #00EBBE"></span></a>
+
+                <ul class="dropdown-menu dropdown-menu-right ">
+                    <li ><a href="#/myAccount">My Account </a></li>
+                    <li  class="divider"></li>
+                    <li ><a ng-click="signout()" >Signout</a></li>
+                </ul>
+            </li>
+            <li class="" ng-show="authenticated">
+                <a class="" data-toggle="" href="" ng-controller="ChatController" ng-show="ChatAuthenticated" ng-click="ChatClick()">
+                    <span class=" glyphicon glyphicon-envelope"style="font-size:18px;color: #00EBBE"></span></a>
+                <!--<ul class="dropdown-menu dropdown-menu-right ">
+                    <li><a href="#">Submenu 1-1</a></li>
+                    <li><a href="#">Submenu 1-2</a></li>
+                    <li><a href="#">Submenu 1-3</a></li>
+                </ul>-->
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<div id="wrapper" >
+    <div class="overlay"></div>
+
+    <!-- Sidebar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation" ng-show="authenticated">
+        <ul class="nav sidebar-nav" >
+            <li class="sidebar-brand">
+                <img id="header-logo1" src="logo02.png" style="margin-top: 5px;margin-bottom: 4px ;height:35px;margin-left:30px">
+            </li>
+
+            <li  class="sidebar-brand"  style="background-color: #1a1a1a;padding-bottom: 80px;padding-top: 40px" ng-controller="ProjectDetails" >
+                <a ui-sref="projectPage({userrole: role})" ><span style="line-height: 21px;">{{projectTitle}}</span></a>
+            </li>
+
+            <li ng-controller="productBacklogNav">
+                <a ng-click="productBacklogNav()" ng-show="role=='Developer'||role=='ProductOwner'||role=='ScrumMaster'">Product Backlog &raquo;</a>
+            </li>
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" ng-show="role=='Developer'||role=='ProductOwner'||role=='ScrumMaster'" data-toggle="dropdown">Sprint <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-header" style="background-color: #1a1a1a;">Current Sprint</li>
+                    <li ui-sref="sprintBacklog"><a ng-click="" ng-show="role=='Developer'||role=='ScrumMaster'"> &nbsp;Sprint Backlog</a></li>
+                    <li ui-sref="taskBoard"><a  ng-show="role=='Developer'||role=='ScrumMaster'"> &nbsp;Task Board</a></li>
+                    <li ui-sref="myTasks"><a  ng-show="role=='Developer'"> &nbsp;My Tasks</a></li>
+                    <li ui-sref="sprintOptions"><a ng-show="role=='ProductOwner'">&nbsp;Sprint Options</a></li>
+                    <li class="dropdown-header" style="background-color: #1a1a1a;" ng-show="role=='Developer'||role=='ProductOwner'||role=='ScrumMaster'">Sprint History</li>
+                    <li><a ui-sref="pastSprints" ng-show="role=='Developer'||role=='ProductOwner'||role=='ScrumMaster'"> &nbsp;Past Sprints</a></li>
+                </ul>
+            </li>
+            <li>
+                <a ui-sref="Graph" ng-show="role=='Developer'||role=='ProductOwner'||role=='ScrumMaster'">Project Status &raquo;</a>
+            </li>
+            <li>
+                <a href="#">Walk through &raquo;</a>
+            </li>
+        </ul>
+        <p style="font-size:40px">&nbsp;</p>
+    </nav>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <button type="button" class="hamburger is-closed" data-toggle="offcanvas" ng-show="authenticated">
+            <img src="Sidebar.png" style="opacity: 0.6"/>
+
+        </button>
+        <div ui-view class="container-fluid " style="margin-left: 25px" >
+
+
+
+        </div>
+
+        <!--<button type="button" ng-controller="ChatController" class="Messaging" data-toggle="" ng-show="ChatAuthenticated" ng-click="ChatClick()">
+            <img src="Chat.png"/>
+        </button>-->
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<br/>
+
+<div class="container-fluid " style="border-top:1px solid #E0E0E0; height:40px;background-color:#F8F8F8" >
+    <p class="navbar-text pull-right" style="margin:0;padding:0;margin-top: 10px"><span >
+        Copyright &copy; TeamHotel</span></p>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        var trigger = $('.hamburger'),
+                overlay = $('.overlay'),
+                isClosed = false;
+
+        trigger.click(function () {
+            hamburger_cross();
+        });
+
+        function hamburger_cross() {
+
+            if (isClosed == true) {
+                overlay.hide();
+                trigger.removeClass('is-open');
+                trigger.addClass('is-closed');
+                isClosed = false;
+            } else {
+                overlay.show();
+                trigger.removeClass('is-closed');
+                trigger.addClass('is-open');
+                isClosed = true;
+            }
+        }
+
+        $('[data-toggle="offcanvas"]').click(function () {
+            $('#wrapper').toggleClass('toggled');
+        });
+    });
+</script>
+
+</body>
+
+<style>
+    a:hover {
+        cursor:pointer;
+    text-decoration: none;
+    }
+
+    #wrapper {
+        padding-left: 0;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    #wrapper.toggled {
+        padding-left: 220px;
+    }
+
+    #sidebar-wrapper {
+
+        z-index: 1000;
+        left: 220px;
+        width: 0;
+        height: 100%;
+        margin-left: -220px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: #1a1a1a;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    #sidebar-wrapper::-webkit-scrollbar {
+        display: none;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 220px;
+
+    }
+
+    #page-content-wrapper {
+        width: 100%;
+        padding-top: 50px;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 150px;
+        overflow-y: auto; overflow-x:hidden;
+    }
+    .sidebar-nav {
+        position: absolute;
+        top: 0;
+        width: 220px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .sidebar-nav li {
+        position: relative;
+        line-height: 20px;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .sidebar-nav li:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        height: 100%;
+        width: 3px;
+        background-color: #1c1c1c;
+        -webkit-transition: width .2s ease-in;
+        -moz-transition:  width .2s ease-in;
+        -ms-transition:  width .2s ease-in;
+        transition: width .2s ease-in;
+
+    }
+    .sidebar-nav li:first-child a {
+        color: #fff;
+        background-color: #1a1a1a;
+    }
+    .sidebar-nav li:nth-child(2):before {
+        color: #fff;
+        background-color: #00EBBE;
+    }
+    .sidebar-nav li:nth-child(3):before {
+        background-color: #00EBBE;
+    }
+    .sidebar-nav li:nth-child(4):before {
+        background-color: #00EBBE;
+    }
+    .sidebar-nav li:nth-child(5):before {
+        background-color: #00EBBE;
+    }
+    .sidebar-nav li:nth-child(6):before {
+        background-color: #00EBBE;
+    }
+    .sidebar-nav li:nth-child(7):before {
+        background-color: #00EBBE;
+    }
+    .sidebar-nav li:nth-child(8):before {
+        background-color: #00EBBE;
+    }
+    .sidebar-nav li:nth-child(9):before {
+        background-color:#00EBBE;
+    }
+    .sidebar-nav li:hover:before,
+    .sidebar-nav li.open:hover:before {
+        width: 100%;
+        -webkit-transition: width .2s ease-in;
+        -moz-transition:  width .2s ease-in;
+        -ms-transition:  width .2s ease-in;
+        transition: width .2s ease-in;
+
+    }
+
+    .sidebar-nav li a {
+        display: block;
+        color: #00EBBE;<!--#ddd -->
+        text-decoration: none;
+        padding: 10px 15px 10px 30px;
+    }
+
+    .sidebar-nav li a:hover,
+    .sidebar-nav li a:active,
+    .sidebar-nav li a:focus,
+    .sidebar-nav li.open a:hover,
+    .sidebar-nav li.open a:active,
+    .sidebar-nav li.open a:focus{
+        color: #fff;
+        text-decoration: none;
+        background-color: transparent;
+    }
+
+    .sidebar-nav > .sidebar-brand {
+        height: 65px;
+        font-size: 20px;
+        line-height: 44px;
+    }
+    .sidebar-nav .dropdown-menu {
+        position: relative;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
+        border: none;
+        background-color: #222;
+        box-shadow: none;
+    }
+
+    /*-------------------------------*/
+    /*       Hamburger-Cross         */
+    /*-------------------------------*/
+    .Messaging{
+        position:fixed;
+        right: 35px;
+        bottom: 35px;
+        z-index: 999;
+        display: block;
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: transparent;
+    }
+    .hamburger {
+        position: fixed;
+        top: 85px;
+        z-index: 999;
+        display: block;
+        width: 32px;
+        height: 32px;
+        margin-left: 0px;
+        background: transparent;
+        border: none;
+    }
+    .hamburger:hover,
+    .hamburger:focus,
+    .hamburger:active {
+        outline: none;
+    }
+    .hamburger.is-closed:before {
+        content: '';
+        display: block;
+        width: 100px;
+        font-size: 14px;
+        color: #fff;
+        line-height: 32px;
+        text-align: center;
+        opacity: 0;
+        -webkit-transform: translate3d(0,0,0);
+        -webkit-transition: all .35s ease-in-out;
+    }
+    .hamburger.is-closed:hover:before {
+        opacity: 1;
+        display: block;
+        -webkit-transform: translate3d(-100px,0,0);
+        -webkit-transition: all .35s ease-in-out;
+    }
+
+    .hamburger.is-open:before {
+        content: '';
+        display: block;
+        width: 100px;
+        font-size: 14px;
+        color: #fff;
+        line-height: 32px;
+        text-align: center;
+        opacity: 0;
+        -webkit-transform: translate3d(0,0,0);
+        -webkit-transition: all .35s ease-in-out;
+    }
+    .hamburger.is-open:hover:before {
+        opacity: 1;
+        display: block;
+        -webkit-transform: translate3d(-100px,0,0);
+        -webkit-transition: all .35s ease-in-out;
+    }
+/*chat*/
+    .chat
+    {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .chat li
+    {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px dotted #B3A9A9;
+    }
+
+    .chat li.left .chat-body
+    {
+        margin-left: 60px;
+    }
+
+    .chat li.right .chat-body
+    {
+        margin-right: 60px;
+    }
+
+
+    .chat li .chat-body span
+    {
+        margin: 0;
+        color: #777777;
+    }
+
+    .panel .slidedown .glyphicon, .chat .glyphicon
+    {
+        margin-right: 5px;
+    }
+
+    .panel-body
+    {
+        overflow-y: scroll;
+    }
+
+    ::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar
+    {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-thumb
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #555;
+    }
+/* chat */
+
+    @media(max-width: 767px){
+        .Messaging{
+            display: none;
+        }
+
+        #header-logo {
+            height: 35px;
+        }
+        #wrapper {
+            margin-top: 0px;
+        }
+        .container-fluid .pull-right{
+            margin-top: 5px
+        }
+    }
+    @media(max-width: 500px ){
+        #header-logo{
+            height:30px;
+            margin-left: -20px;
+        }
+        #header-logo1{
+            height:30px;
+            margin-left: -20px;
+        }
+    }
+
+    @media(min-width:768px) {
+        .Messaging{
+            display: block;
+        }
+        .container-fluid .pull-right{
+            margin-top: 10px
+        }
+
+        #header-logo {
+            height:40px;
+
+        }
+    }
+
+    .btn-custom-lighten.active {
+        color: rgba(255, 255, 255, 0.75);
+    }
+    .btn-custom-lighten {
+        color: #ffffff;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+        background-color: #ae4bfd;
+        background-image: -moz-linear-gradient(top, #a537fd, #bc69fe);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#a537fd), to(#bc69fe));
+        background-image: -webkit-linear-gradient(top, #a537fd, #bc69fe);
+        background-image: -o-linear-gradient(top, #a537fd, #bc69fe);
+        background-image: linear-gradient(to bottom, #a537fd, #bc69fe);
+        background-repeat: repeat-x;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffa537fd', endColorstr='#ffbc69fe', GradientType=0);
+        border-color: #bc69fe #bc69fe #9a1efd;
+        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        *background-color: #bc69fe;
+        /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    }
+    .btn-custom-lighten:hover,
+    .btn-custom-lighten:focus,
+    .btn-custom-lighten:active,
+    .btn-custom-lighten.active,
+    .btn-custom-lighten.disabled,
+    .btn-custom-lighten[disabled] {
+        color: #ffffff;
+        background-color: #bc69fe;
+        *background-color: #b050fd;
+    }
+    .btn-custom-lighten:active,
+    .btn-custom-lighten.active {
+        background-color: #a537fd ;
+    }
+</style>
+</html>

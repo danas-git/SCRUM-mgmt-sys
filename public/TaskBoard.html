@@ -1,0 +1,85 @@
+
+<div class="panel-group " ng-repeat="stories in sprint.sprintStory track by $index" style="margin-bottom: 15px">
+    <div class="col-md-12" style="margin-left: -15px" >
+        <div class="col-md-5" >
+            <div class="panel-heading " style="background-color:#deb7fd;">
+                <h4 class="panel-title">
+                    <a  style="color:#595959;font-weight: 600;text-decoration: none"  >{{stories.storyName}} </a>
+                    <span style="font-size: 10px;font-weight: 600"  ng-bind="stories.storyStatus"></span>
+                </h4>
+            </div>
+            <div class="caption" ><br/>
+                <div style="line-height:5px;"> <p style="font-size: 12px;"><span>Created on:&nbsp;</span><span style="font-weight: 600;" ng-bind="stories.storyCreated_on"></span></p>
+                    <p style="font-size: 11px;"><span>Type:&nbsp;</span><span style="font-weight: 600;"  ng-bind="stories.storyType"></span></p>
+                    <p style="font-size: 11px;"><span>Priority:&nbsp;</span><span style="font-weight: 600;"  ng-bind="stories.storyPriority"></span></p></div>
+                <p ng-bind="stories.storyDescription">{{stories.storyDescription}}</p>
+            </div>
+
+            <p style="margin-bottom: 10px" ng-hide="role=='ScrumMaster'"><a style="text-decoration:none;border-style: none;font-size: 12px;font-weight: 600" data-toggle="collapse" data-target="#collapse{{$index+1}}">Create Tasks &raquo;</a></p>
+
+            <div id="collapse{{$index+1}}" class="panel-collapse collapse">
+                <form class="form-horizontal" role="form" ng-submit="addTask(stories._id)" >
+                    <div class="form-group">
+                        <label class="control-label col-sm-3 col-xs-4" style="font-size: 12px" >Task:</label>
+                        <div class="col-sm-9 col-xs-8">
+                            <input type="username" class="form-control" ng-model="task.taskName" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3 col-xs-4" style="font-size: 12px" >Description:</label>
+                        <div class="col-sm-9 col-xs-8">
+                            <textarea class="form-control" ng-model="task.taskDescription"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-default" style="float: right;color:#fff;background-color:#A537FD; border-style: none;font-weight:600">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="table table-condensed table-responsive">
+                <table class="table">
+                    <tr>
+                        <td style="width:20%;border-top:none !important;font-size: 12px;font-weight: 600;color:#595959">Task</td>
+                        <td style="width:30%;border-top:none !important;font-size: 12px;font-weight: 600;color:#595959">Description</td>
+                        <td style="width:15%;border-top:none !important;font-size: 12px;font-weight: 600;color:#595959">Current Status</td>
+                        <td style="width:15%;border-top:none !important;font-size: 12px;font-weight: 600;color:#595959">Assigned to</td>
+                        <td  style="border-top:none !important;width:20%"></td>
+                    </tr>
+                    <tbody>
+                        <tr ng-repeat="tasks in stories.storyTasks">
+
+                            <td style="font-size: 12px" ><span editable-text="tasks.taskName" e-name="taskName" e-form="rowform"  e-required>{{tasks.taskName}}</span></td>
+                            <td style="font-size: 12px"> <span editable-text="tasks.taskDescription" e-name="taskDescription" e-form="rowform"  e-required>{{tasks.taskDescription}}</span></td>
+                            <td style="font-size: 12px"> <span editable-select="tasks.taskStatus" e-name="taskStatus" e-form="rowform" e-ng-options="s for s in taskStatus" >{{tasks.taskStatus}}</span></td>
+                            <td style="font-size: 12px"> <span  editable-select="tasks.taskAssigned_to" e-name="taskAssigned_to" e-form="rowform" e-ng-options="m for m in members">{{tasks.taskAssigned_to}}</span></td>
+                            <td style="white-space: nowrap">
+                                <!-- form -->
+                                <form editable-form name="rowform" onaftersave="saveTask($data,tasks._id)" ng-show="rowform.$visible" class="form-buttons form-inline" >
+                                    <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-custom-lighten btn-xs">
+                                        save
+                                    </button>
+                                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default btn-xs">
+                                        cancel
+                                    </button>
+                                </form>
+                                <div class="buttons" ng-show="!rowform.$visible ">
+                                    <button class="btn btn-custom-lighten btn-xs" ng-click="rowform.$show()" ng-hide="role=='ScrumMaster'">edit</button>
+                                    <button class="btn btn-danger btn-xs" ng-click="removeTask(stories._id,tasks._id)" ng-hide="role=='ScrumMaster'">del</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+    </style>
+

@@ -1,0 +1,57 @@
+
+<div class=" col-sm-11 ">
+
+    <p  style="color:mediumpurple;font-size: 11px;font-weight: 600"  ng-show="message"><span style="color:red" class="glyphicon"></span>{{message}}<!--<a ng-click="hideMessage()">&nbsp;&nbsp;&nbsp;Hide&raquo;</a>--></p>
+    <div ng-show="!message">
+    <h3 style="color:#A537FD;font-size: 24px;font-weight: 600">Current Sprint</h3>
+    <div class="col-sm-11 col-md-10 " >
+        <table class="table table-condensed"  >
+            <tbody>
+            <tr >
+                <td  style="font-size: 14px;border-top:none !important;">Sprint:</td><td style="border-top:none !important;"> <span style="font-size: 13px;font-weight: 600" ng-bind="sprint.sprintName"></span></td>
+            </tr>
+            <tr>
+                <td  style="font-size: 14px">Description:</td><td> <span style="font-size: 13px;font-weight: 600" ng-bind="sprint.sprintDescription"></span></td>
+            </tr>
+            <tr>
+                <td  style="font-size: 14px">Date Added:</td><td> <span style="font-size: 13px;font-weight: 600" ng-bind="sprint.sprintStartDate"></span></td>
+            </tr>
+            <tr>
+                <td  style="font-size: 14px">End Date:</td><td> <span style="font-size: 13px;font-weight: 600" ng-bind="sprint.sprintEndDate"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+<div class=" col-sm-11 " ng-show="!message">
+    <h3 style="color:#A537FD;font-size: 24px;font-weight: 600">Sprint Stories</h3>
+    <br/>
+    <p  style="color:red;font-size: 14px;font-weight: 600"  ng-show="message"><span style="color:red" class="glyphicon"></span>{{message}}</p>
+</div>
+
+<div class=" col-md-6 col-sm-9 col-xs-12 " ng-repeat="stories in sprint.sprintStory track by $index" >
+    <div class="panel-group" >
+        <div class="panel panel-default" >
+            <div class="panel-heading " style="background-color:#deb7fd;">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-target="#collapse{{$index+1}}" style="color:#595959;font-weight: 600;text-decoration: none"  >{{stories.storyName}} </a>
+                    <span style="font-size: 10px;font-weight: 600"  ng-bind="stories.storyStatus"></span>
+                </h4>
+            </div>
+            <div id="collapse{{$index+1}}" class="collapse in" style="background-color:#F8F8F8 ">
+                <div class="caption" ><br/>
+                    <div style="line-height:5px;"> <p style="font-size: 12px;"><span>Created on:&nbsp;</span><span style="font-weight: 600;" ng-bind="stories.storyCreated_on"></span></p>
+                        <p style="font-size: 11px;"><span>Type:&nbsp;</span><span style="font-weight: 600;"  ng-bind="stories.storyType"></span></p>
+                        <p style="font-size: 11px;"><span>Priority:&nbsp;</span><span style="font-weight: 600;"  ng-bind="stories.storyPriority"></span></p></div>
+
+                    <p ng-bind="stories.storyDescription">{{stories.storyDescription}}</p>
+                    <button type="button" class="btn btn-custom-lighten btn-sm" ng-click="closeSprintStory(sprint._id,stories._id)">
+                        Story Completed
+                    </button>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

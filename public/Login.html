@@ -1,0 +1,42 @@
+
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="page-header">
+                        <h3 style="color:#595959">Login Area</h3>
+                    </div>
+                    <form role="form" ng-submit="login()">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" style="color:#595959">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                <input type="username" class="form-control" id="exampleInputEmail1" ng-model="user.username" ng-required="true" placeholder="Enter username">
+
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" style="color:#595959">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
+                                <input type="password" ng-required="true"  class="form-control" id="exampleInputPassword1" ng-model="user.password" placeholder="Password">
+                            </div>
+                            <p style="color:red;font-size: 10px;font-weight: 600">{{resp_message}}</p>
+                        </div>
+                        <a class="pull-right" href="#" style="color:#595959;font-size:10px;"> forgot password!! </a>
+                        <hr/>
+                        <div>
+                        <button type="submit" class="btn btn-primary" style="background-color:#00EBBE; border-style: none"><span class="glyphicon glyphicon-lock"></span><span style="font-weight:600"> Sign in</span></button>
+
+                            <button  class="btn btn-primary" style="background-color:#fff; border-style: solid;border-color:#00EBBE ;float:right"><a href="#/register" style="color:#00EBBE;font-weight:600;margin-top:;float:right"> Create account </a></button>
+
+                            </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
